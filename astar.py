@@ -50,7 +50,6 @@ def HeuristicPath(xStart, yStart, xEnd, yEnd):
     else:
         return y_dist
 
-'''not thread safe, 2 diff threads should not use'''
 class AStar:
     # gets passed 2d array of tiles, and a function of how to convert them
     # to _Agrid
@@ -66,6 +65,7 @@ class AStar:
         self.neighbors = [None, None, None, None, None, None, None, None]  # cached!!!! reuse this object
         self.tiles_to_reinitialize = []
         self.saved_paths = {}
+        # could just use list comprehension
         self.grid = \
             list(map(lambda x: list(map(lambda j: ATile(inputTileToAstarTile(j), j.cost, game_state), x)), self.inputGrid))
 
@@ -448,7 +448,7 @@ class AStar:
     #         pass
     #     return result
 
-    # get rid of!?
+    # get rid of!?!?!?!??!?!?!
     def getNeighbors(self, xIndex, yIndex) -> list[tuple[int, int]]:
         result = []
 
@@ -461,7 +461,7 @@ class AStar:
             result.append((xIndex - 1, yIndex - 1))
             result.append((xIndex, yIndex - 1))
             result.append((xIndex + 1, yIndex - 1))  # theta just under 2pi
-            result = list(filter(lambda x: self.grid[x[1]][x[0]].passable == True, result))
+            result = list(filter(lambda x: self.grid[x[1]][x[0]].passable == True, result))  # could use list Comprehension
         except:
             pass
         return result
